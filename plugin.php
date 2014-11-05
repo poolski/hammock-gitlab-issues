@@ -87,7 +87,7 @@ class gitlab_issues extends SlackServicePlugin {
                 'channel'     => $this->icfg['channel'],
                 'username'    => $this->icfg['botname'],
                 'attachments' => $fields,
-                'icon_url'    => $cfg['root_url'] . 'plugins/gitlab_issues/icon_128.png'
+                'icon_url'    => 'https://cdn.pancentric.com/cdn/libs/icons/gitlab.png'
             ));
         }
 
