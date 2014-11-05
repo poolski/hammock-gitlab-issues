@@ -64,20 +64,19 @@ class gitlab_issues extends SlackServicePlugin {
         }
 
         $fields = array();
-        foreach ($gitlab_payload->object_attributes as $issue) {
-            $fields[] = array(
-                'text' => sprintf(
-                    '<%s|%s> - %s',
-                    $issue->url,
-                    substr($issue->id, 0, 9),
-                    $issue->title
-                ),
-                'color' => 'good',
-            );
-        }
+        $fields[] = array(
+            'text' => sprintf(
+                '<%s|%s> - %s - %s',
+                $gitlab_payload->object_attributes->url,
+                substr($gitlab_payload->object_attributes->id, 0, 9),
+                $gitlab_payload->object_attributes->title,
+                substr($gitlab_payload->object_attributes->description,0, 140)
+            ),
+            'color' => 'good',
+        );
 
         $message = sprintf(
-            'New/updated issue on <%s|%s>',
+            'New/updated issue on <%s|%s> by %s',
             $gitlab_payload->object_attributes->url,
             $gitlab_payload->object_attributes->name,
             $gitlab_payload->object_attributes->state
