@@ -56,7 +56,7 @@ class gitlab_issues extends SlackServicePlugin {
 
         $gitlab_payload = json_decode($req['post_body']);
 
-        if (!$gitlab_payload || !is_object($gitlab_payload) || $gitlab_payload->object_kind != "issue")) {
+        if (!$gitlab_payload || !is_object($gitlab_payload) || $gitlab_payload->object_kind != "issue") {
             return array(
                 'ok'    => false,
                 'error' => "No payload received from gitlab",
