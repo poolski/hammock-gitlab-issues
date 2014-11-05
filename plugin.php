@@ -76,7 +76,7 @@ class gitlab_issues extends SlackServicePlugin {
         );
 
         $message = sprintf(
-            'Issue #<%s|%s> - %s',
+            '<b>Issue #%s - %s - [%s]</b>',
             $gitlab_payload->object_attributes->id,
             $gitlab_payload->object_attributes->title,
             $gitlab_payload->object_attributes->action
