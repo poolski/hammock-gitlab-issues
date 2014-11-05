@@ -56,7 +56,7 @@ class gitlab_issues extends SlackServicePlugin {
 
         $gitlab_payload = json_decode($req['post_body']);
 
-        if (!$gitlab_payload || !is_object($gitlab_payload) || !isset($gitlab_payload->object_attributes)) {
+        if (!$gitlab_payload || !is_object($gitlab_payload) || $gitlab_payload->object_kind != "issue")) {
             return array(
                 'ok'    => false,
                 'error' => "No payload received from gitlab",
@@ -76,10 +76,10 @@ class gitlab_issues extends SlackServicePlugin {
         );
 
         $message = sprintf(
-            'New/updated issue on <%s|%s> by %s',
-            $gitlab_payload->object_attributes->url,
-            $gitlab_payload->object_attributes->name,
-            $gitlab_payload->object_attributes->state
+            'Issue #<%s|%s> - %s',
+            $gitlab_payload->object_attributes->id,
+            $gitlab_payload->object_attributes->title,
+            $gitlab_payload->object_attributes->action
         );
 
         if (count($fields) > 0) {
