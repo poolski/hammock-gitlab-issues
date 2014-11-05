@@ -56,7 +56,7 @@ class gitlab_commits extends SlackServicePlugin {
 
         $gitlab_payload = json_decode($req['post_body']);
 
-        if (!$gitlab_payload || !is_object($gitlab_payload) || !isset($gitlab_payload->commits)) {
+        if (!$gitlab_payload || !is_object($gitlab_payload) || !isset($gitlab_payload->object_attributes)) {
             return array(
                 'ok'    => false,
                 'error' => "No payload received from gitlab",
@@ -64,25 +64,23 @@ class gitlab_commits extends SlackServicePlugin {
         }
 
         $fields = array();
-        foreach ($gitlab_payload->commits as $commit) {
+        foreach ($gitlab_payload->object_attributes as $issue) {
             $fields[] = array(
                 'text' => sprintf(
                     '<%s|%s> - %s',
-                    $commit->url,
-                    substr($commit->id, 0, 9),
-                    $commit->message
+                    $issue->url,
+                    substr($issue->id, 0, 9),
+                    $issue->title
                 ),
                 'color' => 'good',
             );
         }
 
         $message = sprintf(
-            'New push on <%s|%s> by %s on branch %s (%d Commits)',
-            $gitlab_payload->repository->homepage,
-            $gitlab_payload->repository->name,
-            $gitlab_payload->user_name,
-            str_replace('refs/heads/', '', $gitlab_payload->ref),
-            $gitlab_payload->total_commits_count
+            'New/updated issue on <%s|%s>',
+            $gitlab_payload->object_attributes->url,
+            $gitlab_payload->object_attributes->name,
+            $gitlab_payload->object_attributes->state
         );
 
         if (count($fields) > 0) {
@@ -101,7 +99,7 @@ class gitlab_commits extends SlackServicePlugin {
     }
 
     function getLabel() {
-        return "Post commits to {$this->icfg['channel_name']} as {$this->icfg['botname']}";
+        return "Post issue updates to {$this->icfg['channel_name']} as {$this->icfg['botname']}";
     }
 
 }
