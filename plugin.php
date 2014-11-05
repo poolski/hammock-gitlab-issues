@@ -2,8 +2,8 @@
 
 class gitlab_issues extends SlackServicePlugin {
 
-    public $name = "GitLab Commits";
-    public $desc = "Source control and code management.";
+    public $name = "GitLab Issues";
+    public $desc = "Source control and issue management.";
 
     public $cfg = array(
         'has_token' => true,
