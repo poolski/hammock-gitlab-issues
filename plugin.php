@@ -1,6 +1,6 @@
 <?php
 
-class gitlab_commits extends SlackServicePlugin {
+class gitlab_issues extends SlackServicePlugin {
 
     public $name = "GitLab Commits";
     public $desc = "Source control and code management.";
@@ -88,7 +88,7 @@ class gitlab_commits extends SlackServicePlugin {
                 'channel'     => $this->icfg['channel'],
                 'username'    => $this->icfg['botname'],
                 'attachments' => $fields,
-                'icon_url'    => $cfg['root_url'] . 'plugins/gitlab_commits/icon_128.png'
+                'icon_url'    => $cfg['root_url'] . 'plugins/gitlab_issues/icon_128.png'
             ));
         }
 
