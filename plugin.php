@@ -69,7 +69,7 @@ class gitlab_issues extends SlackServicePlugin {
             '*Issue #%s* - %s - *[%s]*',
             $gitlab_payload->object_attributes->iid,
             $gitlab_payload->object_attributes->title,
-            strtoupper($gitlab_payload->object_attributes->action)
+            $gitlab_payload->object_attributes->action
         );
 
         if (count($fields) > 0) {
