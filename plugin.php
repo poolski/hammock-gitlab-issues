@@ -63,6 +63,8 @@ class gitlab_issues extends SlackServicePlugin {
             );
         }
 
+        $fields = array();
+
         $message = sprintf(
             '*Issue #%s* - %s - *[%s]*',
             $gitlab_payload->object_attributes->iid,
@@ -74,6 +76,7 @@ class gitlab_issues extends SlackServicePlugin {
             $this->postToChannel($message, array(
                 'channel'     => $this->icfg['channel'],
                 'username'    => $this->icfg['botname'],
+                'attachments' => $fields,
                 'icon_url'    => 'https://cdn.pancentric.com/cdn/libs/icons/gitlab.png'
             ));
         }
