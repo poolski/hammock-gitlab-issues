@@ -63,30 +63,17 @@ class gitlab_issues extends SlackServicePlugin {
             );
         }
 
-        $fields = array();
-        $fields[] = array(
-            'text' => sprintf(
-                '<%s|%s> - %s - %s',
-                $gitlab_payload->object_attributes->url,
-                substr($gitlab_payload->object_attributes->id, 0, 9),
-                $gitlab_payload->object_attributes->title,
-                substr($gitlab_payload->object_attributes->description,0, 140)
-            ),
-            'color' => 'good',
-        );
-
         $message = sprintf(
-            '*Issue #%s - %s - [%s]*',
-            $gitlab_payload->object_attributes->id,
+            '*Issue #%s* - %s - *[%s]*',
+            $gitlab_payload->object_attributes->iid,
             $gitlab_payload->object_attributes->title,
-            $gitlab_payload->object_attributes->action
+            strtoupper($gitlab_payload->object_attributes->action)
         );
 
         if (count($fields) > 0) {
             $this->postToChannel($message, array(
                 'channel'     => $this->icfg['channel'],
                 'username'    => $this->icfg['botname'],
-                'attachments' => $fields,
                 'icon_url'    => 'https://cdn.pancentric.com/cdn/libs/icons/gitlab.png'
             ));
         }
